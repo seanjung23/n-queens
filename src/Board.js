@@ -79,12 +79,49 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var rows = this.rows();
+      var row = rows[rowIndex];
+      var pieceCount = 0;
+
+      for (var i = 0; i < row.length; i++) {
+        if (row[i] === 1) {
+          pieceCount++;
+        }
+        if (pieceCount >= 2) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var rows = this.rows();
+      var hasConflicts = false;
+
+      //iterate over each row
+      for (var row = 0; row < rows.length; rows++) {
+        var currentRow = rows[row];
+        var pieceCount = 0;
+        // iterate over every value in the row
+          // check if piece count is greater than or equal to 2
+            // return true;
+          // check if value is equal to 1
+            // increment piececount
+        for (var piece = 0; piece < currentRow.length; piece++) {
+          if (currentRow[piece] === 1) {
+            pieceCount++;
+          }
+          if (pieceCount >= 2) {
+            console.log('fjalksdfhlkashfdahfkh', hasConflicts);
+            hasConflicts = true;
+            break;
+          }
+        }
+      }
+
+      return hasConflicts;
     },
 
 
@@ -94,11 +131,37 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      // declare var set to array of rows
+      // declare columns array set to an empty array
+
+      // iterate over each row
+        // add the value of the row at colIndex to the columns array
+
+      // check if calling hasRowConflictAt with arguments of colIndex and the columns array returns false
+        // return true;
+
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // declare var set to entire array of rows
+      // declare columns set to an array of four empty arrays
+
+      //iterate over each row
+        // iterate over each value in row
+          // check if we are in first value
+            // add current value to first array in columns
+          // otherwise check if we are in the second value
+            // add current value to second array in columns
+          // otherwise check if we are in the third value
+            // add current value to third array in columns
+          // otherwise check if we are in the fourth value
+            // add current value to fourth array in columns
+
+      // check if calling hasAnyRowConflicts with arguments of columns array returns false
+        // return true
+
       return false; // fixme
     },
 
