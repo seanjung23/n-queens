@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -78,9 +78,9 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
-    hasRowConflictAt: function(rowIndex) {
-      var rows = this.rows();
-      var row = rows[rowIndex];
+    hasRowConflictAt: function(rowIndex, board) {
+      var board = board || this.rows();
+      var row = board[rowIndex];
       var pieceCount = 0;
 
       for (var i = 0; i < row.length; i++) {
@@ -96,71 +96,68 @@
     },
 
     // test if any rows on this board contain conflicts
-    hasAnyRowConflicts: function() {
-      var rows = this.rows();
-      var hasConflicts = false;
+    hasAnyRowConflicts: function(board) {
+      var board = board || this.rows();
 
-      //iterate over each row
-      for (var row = 0; row < rows.length; rows++) {
-        var currentRow = rows[row];
-        var pieceCount = 0;
-        // iterate over every value in the row
-          // check if piece count is greater than or equal to 2
-            // return true;
-          // check if value is equal to 1
-            // increment piececount
-        for (var piece = 0; piece < currentRow.length; piece++) {
-          if (currentRow[piece] === 1) {
-            pieceCount++;
-          }
-          if (pieceCount >= 2) {
-            console.log('fjalksdfhlkashfdahfkh', hasConflicts);
-            hasConflicts = true;
-            break;
-          }
+      for (var i = 0; i < board.length; i++) {
+        if (this.hasRowConflictAt(i, board)) {
+          return true;
         }
       }
 
-      return hasConflicts;
+      return false;
     },
-
-
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
-    // test if a specific column on this board contains a conflict
+
+    createColumnsBoard: function() {
+      var board = this.rows();
+      var result = [];
+
+      for (var i = 0; i < board.length; i++) {
+        var row = board[i];
+
+        for (var j = 0; j < row.length; j++) {
+          if (i === 0) {
+            var column = [row[j]];
+            result.push(column);
+          }
+
+          result[j].push(row[j]);
+        }
+      }
+
+      return result;
+    },
+
     hasColConflictAt: function(colIndex) {
-      // declare var set to array of rows
       // declare columns array set to an empty array
+      var columnsBoard = this.createColumnsBoard();
 
       // iterate over each row
-        // add the value of the row at colIndex to the columns array
+      //   add the value of the row at colIndex to the columns array
 
       // check if calling hasRowConflictAt with arguments of colIndex and the columns array returns false
-        // return true;
+      //   return true;
+      if (this.hasRowConflictAt(colIndex, columnsBoard)) {
+        return true;
+      }
 
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      // declare var set to entire array of rows
       // declare columns set to an array of four empty arrays
+      var columnsBoard = this.createColumnsBoard();
 
-      //iterate over each row
-        // iterate over each value in row
-          // check if we are in first value
-            // add current value to first array in columns
-          // otherwise check if we are in the second value
-            // add current value to second array in columns
-          // otherwise check if we are in the third value
-            // add current value to third array in columns
-          // otherwise check if we are in the fourth value
-            // add current value to fourth array in columns
-
-      // check if calling hasAnyRowConflicts with arguments of columns array returns false
-        // return true
+      // check if calling hasRowConflictAt with arguments of colIndex and the columns array returns false
+      //   return true;
+      if (this.hasAnyRowConflicts(columnsBoard)) {
+        return true;
+      }
 
       return false; // fixme
     },
